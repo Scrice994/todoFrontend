@@ -1,3 +1,9 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root{
   --primaryColor: #222f39;
   --secondaryColor: #184b7d;
@@ -5,6 +11,7 @@
   --checkboxOff: #F10B0B;
   --hover: #3d688b;
   --addTodo: #12D502;
+  --addTodoWindow:#F9F6EE; 
 }
 
 body {
@@ -29,10 +36,11 @@ body {
   width: 90%;
   height: auto;
   margin: 10px auto;
-  padding: 1px;
+  padding: 10px;
   background-color: var(--secondaryColor);
   border-radius: 10px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   color: var(--textColor);
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
@@ -51,19 +59,31 @@ body {
   margin-left: 10px;
 }
 
+.checkbox-on{
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  margin-left: 10px;
+  background-color: var(--addTodo);
+}
+
 .todo-text{
   margin-left: 10px;
+  line-height: 30px;
+  vertical-align: center;
+}
+
+.todo-label{
+  display: flex;
+  align-items: center;
 }
 
 .todo-delete{
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  right: 50px;
   color: black;
+  display: flex;
 }
 
-.add-todo{
+.add-todo-button{
   position: fixed;
   bottom: 3%;
   right: 3%;
@@ -71,5 +91,54 @@ body {
   height: 60px;
   background-color: var(--addTodo);
   border-radius: 999px;
-  color: var(--textColor)
+  color: var(--textColor); 
+  text-align: center;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.add-todo-window{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--light);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0px 3px 24px var(--dark);
+  background-color: var(--addTodoWindow);
+}
+
+.close-window{
+  position:absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.task-text{
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  padding: 16px;
+  box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  width: 100%;
+  margin: 10px auto 20px;
+}
+
+.create-task-button{
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  background-color: var(--addTodo);
+  color: var(--textColor);
+  padding: 10px;
+  border-radius: 20px;
+  font-size: large;
+  cursor: pointer;
+  border: none;
 }
