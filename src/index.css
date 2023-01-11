@@ -1,0 +1,75 @@
+:root{
+  --primaryColor: #222f39;
+  --secondaryColor: #184b7d;
+  --textColor: #FFFFFF;
+  --checkboxOff: #F10B0B;
+  --hover: #3d688b;
+  --addTodo: #12D502;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primaryColor);
+}
+
+.header{
+  background-color: var(--secondaryColor);
+  padding: 20px;
+  color: var(--textColor);
+  margin-bottom: 20px;
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.todo{
+  width: 90%;
+  height: auto;
+  margin: 10px auto;
+  padding: 1px;
+  background-color: var(--secondaryColor);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  color: var(--textColor);
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.todo:hover{
+  background-color: var(--hover);
+}
+
+
+.checkbox{
+  width: 20px;
+  height: 20px;
+  background-color: var(--checkboxOff);
+  border-radius: 999px;
+  margin-left: 10px;
+}
+
+.todo-text{
+  margin-left: 10px;
+}
+
+.todo-delete{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 50px;
+  color: black;
+}
+
+.add-todo{
+  position: fixed;
+  bottom: 3%;
+  right: 3%;
+  width: 60px;
+  height: 60px;
+  background-color: var(--addTodo);
+  border-radius: 999px;
+  color: var(--textColor)
+}
