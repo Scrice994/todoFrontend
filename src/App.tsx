@@ -8,6 +8,7 @@ const API_PATH_BASE = "http://localhost:3005/todo";
 function App() {
   const [todos, setTodos] = useState<any []>([]);
   const [taskCreator, setTaskCreator] = useState(false)
+  const [newTodo, setNewTodo] = useState("")
 
   useEffect(() => {
     getAllTodos();
@@ -40,6 +41,24 @@ function App() {
     getAllTodos()
   }
 
+  const addTodo = async () => {
+    await fetch(API_PATH_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: newTodo })
+    })
+    .then(res => res.json())
+    .catch(err => console.error(err))
+    
+    setNewTodo("")
+    setTaskCreator(false)
+    getAllTodos()
+  }
+
+  const inputOnChange = (event: any) => {
+    setNewTodo(event.target.value)
+  }
+
   const taskCreatorFalse = () => {
     setTaskCreator(false)
   }
@@ -55,7 +74,14 @@ function App() {
         deleteTodo={deleteTodo}
         tickTodo={tickTodo}
       />
-      {taskCreator && <AddTodoWindow taskCreator={taskCreatorFalse} />}
+      {taskCreator && 
+        <AddTodoWindow 
+          taskCreator={taskCreatorFalse}
+          inputOnChange={inputOnChange}
+          newTodo={newTodo}
+          addTodo={addTodo} 
+        />
+      }
       <AddTodoButton taskCreator={taskCreatorTrue} />
     </div>
   );
