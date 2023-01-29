@@ -33,9 +33,9 @@ body {
 }
 
 .todo{
-  width: 90%;
+  width: 80%;
   height: auto;
-  margin: 10px auto;
+  margin: 10px 20% 10px 5%;
   padding: 10px;
   background-color: var(--secondaryColor);
   border-radius: 10px;
@@ -54,28 +54,33 @@ body {
 .checkbox{
   width: 20px;
   height: 20px;
-  background-color: var(--checkboxOff);
   border-radius: 999px;
   margin-left: 10px;
+  border: 2.2px solid black;
+  align-self: center;
+  padding-top: 2.5px;
 }
 
-.checkbox-on{
+.checkbox-checked{
   width: 20px;
   height: 20px;
   border-radius: 999px;
   margin-left: 10px;
-  background-color: var(--addTodo);
+  align-self: center;
+  color: var(--addTodo);
 }
 
 .todo-text{
+  word-wrap: break-word;
+  width: 90%;
+  height: auto;
   margin-left: 10px;
-  line-height: 30px;
-  vertical-align: center;
+  margin-bottom: 5px;
 }
 
 .todo-label{
+  width: 95%;
   display: flex;
-  align-items: center;
 }
 
 .todo-delete{
@@ -86,7 +91,7 @@ body {
 .add-todo-button{
   position: fixed;
   bottom: 3%;
-  right: 3%;
+  right: 2%;
   width: 60px;
   height: 60px;
   background-color: var(--addTodo);

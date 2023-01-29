@@ -1,22 +1,29 @@
-export const AddTodoWindow = (props: {
+interface AddTodoWindowProps{
   taskCreator: Function;
   newTodo: string;
   inputOnChange: Function;
   addTodo: Function;
-}) => {
+}
+
+export const AddTodoWindow: React.FC<AddTodoWindowProps> = ({ taskCreator, newTodo, inputOnChange, addTodo }) => {
   return (
     <div className="add-todo-window">
-      <div onClick={() => props.taskCreator()} className="close-window">
+
+      <div onClick={() => taskCreator(false)} className="close-window">
         X
       </div>
+
       <h2 className="window-title">Type your task: </h2>
+
       <input
         className="task-text"
+        placeholder="Enter your task..."
         type="text"
-        value={props.newTodo}
-        onChange={(e) => props.inputOnChange(e)}
+        value={newTodo}
+        onChange={(e) => inputOnChange(e)}
       />
-      <button onClick={() => props.addTodo()} className="create-task-button">
+
+      <button onClick={() => addTodo()} className="create-task-button">
         Create task!
       </button>
     </div>
