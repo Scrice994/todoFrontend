@@ -57,20 +57,5 @@ describe("FrontEnd App tests", () => {
     })
   })
 
-  // describe("API calls", () => {
-  //   it("When i type into inputElement and click CreateTask button should create a new Todo", async () => {
-  //     const user = userEvent.setup()
-  //     render(<App />)
-  //     const  openAddTodo = screen.getByText(/\+/i)
-  //     await user.click(openAddTodo)
-  //     const inputElement = screen.getByPlaceholderText(/Enter your task.../i)
-  //     await user.type(inputElement, "exampleText")
-  //     const createButton = screen.getByRole('button', {name: 'Create task!'})
-  //     await user.click(createButton)
-  //     const todo = await screen.findByText("exampleText")
-  //     expect(todo).toBeInTheDocument()
-  //   })
-  // })
-
 })
 

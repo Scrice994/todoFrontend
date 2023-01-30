@@ -1,14 +1,16 @@
 import { Todos } from "./components/Todos";
-import { AddTodoWindow } from "./components/AddTodoWindow";
+import { CreateTodoWindow } from "./components/CreateTodoWindow";
+import { Header } from "./components/Header";
+import { OpenCreateTodoWindowButton } from "./components/OpenCreateTodoWindowButton";
 import useTodo from "./hooks/useTodo";
 
 function App() {
   const {
     todos,
-    taskCreator,
+    todoWindow,
     newTodo,
     deleteTodo,
-    setTaskCreator,
+    setTodoWindow,
     checkTodo,
     addTodo,
     inputOnChange,
@@ -16,19 +18,16 @@ function App() {
 
   return (
     <div className="App">
-      <h2 className="header">Welcome User, Your tasks are:</h2>
+      <Header />
       <Todos todos={todos} deleteTodo={deleteTodo} checkTodo={checkTodo} />
-      {taskCreator && (
-        <AddTodoWindow
-          taskCreator={setTaskCreator}
+      <CreateTodoWindow
+          todoWindow={todoWindow}
+          setTodoWindow={setTodoWindow}
           inputOnChange={inputOnChange}
           newTodo={newTodo}
           addTodo={addTodo}
         />
-      )}
-      <div onClick={() => setTaskCreator(true)} className="add-todo-button">
-        +
-      </div>
+      <OpenCreateTodoWindowButton setTodoWindow={setTodoWindow}/>
     </div>
   );
 }

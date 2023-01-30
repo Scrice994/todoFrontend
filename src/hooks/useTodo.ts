@@ -3,12 +3,12 @@ import { TodoEntity } from "../../../backend/src/entities/TodoEntity";
 
 export default function useTodo(url: string) {
   const [todos, setTodos] = useState<TodoEntity[]>([]);
-  const [taskCreator, setTaskCreator] = useState<boolean>(false);
+  const [todoWindow, setTodoWindow] = useState<boolean>(false);
   const [newTodo, setNewTodo] = useState<string>("");
 
   useEffect(() => {
     getAllTodos();
-  }, []);
+  });
 
   const getAllTodos = async () => {
     await fetch(url)
@@ -47,7 +47,7 @@ export default function useTodo(url: string) {
       .catch((err) => console.error(err));
 
     setNewTodo("");
-    setTaskCreator(false);
+    setTodoWindow(false);
     getAllTodos();
   };
 
@@ -55,5 +55,5 @@ export default function useTodo(url: string) {
     setNewTodo(event.target.value);
   };
 
-  return {todos, taskCreator, newTodo, deleteTodo, setTaskCreator, checkTodo, addTodo, inputOnChange}
+  return {todos, todoWindow, newTodo, deleteTodo, setTodoWindow, checkTodo, addTodo, inputOnChange}
 }
