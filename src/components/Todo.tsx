@@ -9,7 +9,7 @@ interface TodoProps {
 
 export const Todo: React.FC<TodoProps> = ({ todo, checkTodo, deleteTodo }) => {
   return (
-    <div className="todo" key={todo.id}>
+    <div className="todo" role="listitem">
       <div className="todo-label">
         {todo.completed === false ? 
             ( <div

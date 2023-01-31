@@ -21,13 +21,13 @@ function App() {
       <Header />
       <Todos todos={todos} deleteTodo={deleteTodo} checkTodo={checkTodo} />
       <CreateTodoWindow
-          todoWindow={todoWindow}
-          setTodoWindow={setTodoWindow}
-          inputOnChange={inputOnChange}
-          newTodo={newTodo}
-          addTodo={addTodo}
-        />
-      <OpenCreateTodoWindowButton setTodoWindow={setTodoWindow}/>
+        todoWindow={todoWindow}
+        setTodoWindow={setTodoWindow}
+        inputOnChange={inputOnChange}
+        newTodo={newTodo}
+        addTodo={addTodo}
+      />
+      <OpenCreateTodoWindowButton setTodoWindow={setTodoWindow} />
     </div>
   );
 }

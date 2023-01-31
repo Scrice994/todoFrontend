@@ -1,6 +1,8 @@
 import {useState, useEffect} from "react";
 import { TodoEntity } from "../../../backend/src/entities/TodoEntity";
 
+
+
 export default function useTodo(url: string) {
   const [todos, setTodos] = useState<TodoEntity[]>([]);
   const [todoWindow, setTodoWindow] = useState<boolean>(false);
@@ -8,7 +10,7 @@ export default function useTodo(url: string) {
 
   useEffect(() => {
     getAllTodos();
-  });
+  }, []);
 
   const getAllTodos = async () => {
     await fetch(url)
@@ -18,11 +20,11 @@ export default function useTodo(url: string) {
   };
 
   const deleteTodo = async (id: string) => {
-    await fetch(url + `/${id}`, { method: "DELETE" })
+    const deleteTodoFetch = await fetch(url + `/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
-    getAllTodos();
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== deleteTodoFetch.response.id))
   };
 
   const checkTodo = async (id: string, completed: boolean) => {
@@ -34,21 +36,21 @@ export default function useTodo(url: string) {
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
-    getAllTodos();
+    setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? {...todo, completed: !completed} : todo))
   };
 
   const addTodo = async () => {
-    await fetch(url, {
+    const addTodoFetch = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: newTodo }),
     })
       .then((res) => res.json())
       .catch((err) => console.error(err));
-
-    setNewTodo("");
+    
+    setTodos([...todos, addTodoFetch.response])
+    setNewTodo("")
     setTodoWindow(false);
-    getAllTodos();
   };
 
   const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
