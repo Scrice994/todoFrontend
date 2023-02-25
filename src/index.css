@@ -4,78 +4,82 @@
   box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;600;700&family=Shantell+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 :root{
-  --primaryColor: #222f39;
-  --secondaryColor: #184b7d;
+  --primaryColor: #1f44b3;
+  --secondaryColor: #ecf2f4;
   --textColor: #FFFFFF;
   --checkboxOff: #F10B0B;
-  --hover: #3d688b;
+  --hover: #2e31d4;
   --addTodo: #12D502;
   --addTodoWindow:#F9F6EE; 
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--primaryColor);
+  max-width: 1000px;
+  margin: 10px auto;
+  background-color: rgb(226, 214, 214);
+  font-family: 'Roboto Mono', monospace;
 }
 
 .header{
-  background-color: var(--secondaryColor);
+  font-size: 1.4em;
+  background-color: rgb(0, 0, 0);
   padding: 20px;
   color: var(--textColor);
   margin-bottom: 20px;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  border-radius: 10px;
+}
+
+.todos{
+  margin-bottom: 100px;
+  font-family: 'Shantell Sans', cursive;
 }
 
 .todo{
-  width: 80%;
+  width: 90%;
+  max-width: 1000px;
   height: auto;
-  margin: 10px 20% 10px 5%;
+  margin: 10px auto;
   padding: 10px;
   background-color: var(--secondaryColor);
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--textColor);
+  color: black;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
 }
 
-.todo:hover{
-  background-color: var(--hover);
-}
-
-
 .checkbox{
-  width: 20px;
-  height: 20px;
+  max-width: 25px;
+  max-height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   border-radius: 999px;
   margin-left: 10px;
-  border: 2.2px solid black;
+  border: none;
   align-self: center;
-  padding-top: 2.5px;
+  cursor: pointer;
 }
 
-.checkbox-checked{
+/* .checked{
+  border: 1.4px solid black;
+} */
+
+.check-icon{
   width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  margin-left: 10px;
-  align-self: center;
-  color: var(--addTodo);
+  height: 20px; 
 }
 
 .todo-text{
   word-wrap: break-word;
-  width: 90%;
+  width: fit-content;
+  max-width: 85%;
   height: auto;
   margin-left: 10px;
-  margin-bottom: 5px;
 }
 
 .todo-label{
@@ -86,15 +90,33 @@ body {
 .todo-delete{
   color: black;
   display: flex;
+  cursor: pointer;
+  border: none;
+}
+
+.delete-icon{
+  width: 1rem;
+  height: 1rem;
+}
+
+.addtodobtn-container{
+  position: fixed;
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  z-index: 10;
+  bottom: 0%;
+  width: 100%;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-todo-button{
-  position: fixed;
-  bottom: 3%;
-  right: 2%;
   width: 60px;
   height: 60px;
   background-color: var(--addTodo);
+  border: 1px solid black;
   border-radius: 999px;
   color: var(--textColor); 
   text-align: center;
@@ -104,15 +126,15 @@ body {
 
 .add-todo-window{
   position: fixed;
-  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 400px;
+  width: 60%;
+  min-width: 13em;
   background-color: var(--light);
   padding: 16px;
   border-radius: 16px;
-  box-shadow: 0px 3px 24px var(--dark);
+  box-shadow: 3px 3px 10px 3px #000000;
+  border: 3px solid black;
   background-color: var(--addTodoWindow);
 }
 
@@ -132,7 +154,7 @@ body {
   box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.4);
   border-radius: 16px;
   width: 100%;
-  margin: 10px auto 20px;
+  margin: 10px auto;
 }
 
 .create-task-button{
@@ -145,5 +167,14 @@ body {
   border-radius: 20px;
   font-size: large;
   cursor: pointer;
-  border: none;
+  border: 2px solid white;
+  box-shadow: 0px 10px 10px -5px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.error{
+  display: block;
+  font-size: small;
+  color: #F10B0B;
+  margin-bottom: 10px;
+  margin-left: 5px;
 }

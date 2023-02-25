@@ -1,61 +1,88 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { TodoEntity } from "../../../backend/src/entities/TodoEntity";
+import { IHttpClient } from "../common/interfaces/IHttpClient";
 
-
-
-export default function useTodo(url: string) {
+export default function useTodo(httpClient: IHttpClient, url: string) {
   const [todos, setTodos] = useState<TodoEntity[]>([]);
   const [todoWindow, setTodoWindow] = useState<boolean>(false);
   const [newTodo, setNewTodo] = useState<string>("");
+  const [addTodoError, setAddTodoError] = useState<boolean>(false)
 
   useEffect(() => {
     getAllTodos();
+    document.addEventListener("keydown", OnEnter);
   }, []);
 
+  const OnEnter = (event: any) => {
+    if (event.key === "Enter" && todoWindow === false) {
+      setTodoWindow(true);
+    }
+  };
+
   const getAllTodos = async () => {
-    await fetch(url)
-      .then((res) => res.json())
-      .then((res) => setTodos(res.response))
-      .catch((err) => console.error(err));
+    const data = await httpClient.sendRequest(url, { method: "GET" });
+    if (data?.response !== undefined) {
+      setTodos(data.response);
+    }
   };
 
   const deleteTodo = async (id: string) => {
-    const deleteTodoFetch = await fetch(url + `/${id}`, { method: "DELETE" })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
-
-    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== deleteTodoFetch.response.id))
+    const data = await httpClient.sendRequest(`${url}/${id}`, {
+      method: "DELETE",
+    });
+    if (data?.response !== undefined) {
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    }
   };
 
   const checkTodo = async (id: string, completed: boolean) => {
-    await fetch(url + `/${id}`, {
+    const data = await httpClient.sendRequest(`${url}/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completed: !completed }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
-
-    setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? {...todo, completed: !completed} : todo))
+    });
+    if (data?.response !== undefined) {
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo.id === id ? { ...todo, completed: !completed } : todo
+        )
+      );
+    }
   };
 
   const addTodo = async () => {
-    const addTodoFetch = await fetch(url, {
+    const data = await httpClient.sendRequest(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: newTodo }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
-    
-    setTodos([...todos, addTodoFetch.response])
-    setNewTodo("")
-    setTodoWindow(false);
+    });
+
+    if(newTodo === ""){
+      setAddTodoError(true)
+    }
+    if (data?.response !== undefined) {
+      setTodos((prevTodos) => [...prevTodos, data.response]);
+      setNewTodo("");
+      setTodoWindow(false);
+      setAddTodoError(false)
+    } 
   };
 
   const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewTodo(event.target.value);
+    setAddTodoError(false)
   };
 
-  return {todos, todoWindow, newTodo, deleteTodo, setTodoWindow, checkTodo, addTodo, inputOnChange}
+  return {
+    todos,
+    todoWindow,
+    newTodo,
+    addTodoError,
+    deleteTodo,
+    setTodoWindow,
+    checkTodo,
+    addTodo,
+    inputOnChange,
+    setAddTodoError
+  };
 }
