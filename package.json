@@ -20,9 +20,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "test:E2E": "cucumber-js test"
+    "test": "react-scripts test --watchAll=false",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -43,12 +42,9 @@
     ]
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^8.11.0",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/cucumber": "^7.0.0",
     "@types/jsdom": "^21.1.0",
-    "jest-cucumber": "^3.0.1",
     "msw": "^1.0.0",
     "simpler-state": "^1.2.0"
   }
