@@ -61,7 +61,7 @@ export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
               ref={setFocus}
             />
             {addTodoError && newTodo.length <= 0 && (
-              <label className="error">The task can't be empty!</label>
+              <label className="error" data-cy="empty-input-msg">The task can't be empty!</label>
             )}
             <button
               onClick={() => addTodo()}

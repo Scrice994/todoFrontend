@@ -33,6 +33,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
   return (
     <>
       <button
+        data-cy="check-btn"
         className={"checkbox checked"}
         disabled={todoWindow === true}
         onClick={() => checkTodo(todo.id, todo.completed)}
@@ -59,6 +60,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
                   stroke="#075D03" 
                   stroke-width="4"
                   fill="#0BFA00"
+                  data-cy="check-background"
                 />
                 <motion.path
                   variants={animationCheck}
