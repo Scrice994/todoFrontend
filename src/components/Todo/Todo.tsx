@@ -46,8 +46,9 @@ export const Todo: React.FC<TodoProps> = ({
         <button
           className="delete-btn"
           data-cy="delete"
-          onClick={() => {
+          onClick={(e) => {
             deleteTodo(todo.id);
+            e.stopPropagation()
           }}
           disabled={todoWindow === true}
         >
