@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 interface TodoProps {
   todo: TodoEntity;
-  checkTodo: Function;
-  deleteTodo: Function;
+  checkTodo: (id: string, completed: boolean) => void;
+  deleteTodo: (id: string) => void;
   todoWindow: boolean;
 }
 
@@ -42,16 +42,18 @@ export const Todo: React.FC<TodoProps> = ({
         <h3 className="todo-text">{todo.text}</h3>
       </div>
 
-      <button
-        className="todo-delete"
-        data-cy="delete"
-        onClick={() => {
-          deleteTodo(todo.id);
-        }}
-        disabled={todoWindow === true}
-      >
-        <FaTrash className="delete-icon" />
-      </button>
+      <div className="todo-delete">
+        <button
+          className="delete-btn"
+          data-cy="delete"
+          onClick={() => {
+            deleteTodo(todo.id);
+          }}
+          disabled={todoWindow === true}
+        >
+          <FaTrash className="delete-icon" />
+        </button>
+      </div>
     </motion.div>
   );
 }

@@ -17,10 +17,11 @@
 }
 
 body {
-  max-width: 1000px;
+  max-width: 99%;
   margin: 10px auto;
   background-color: rgb(226, 214, 214);
   font-family: 'Roboto Mono', monospace;
+  overflow-x: hidden;
 }
 
 .header{
@@ -39,8 +40,7 @@ body {
 }
 
 .todo{
-  width: 90%;
-  max-width: 1000px;
+  width: 98%;
   height: auto;
   margin: 10px auto;
   padding: 10px;
@@ -59,7 +59,6 @@ body {
   min-width: 25px;
   min-height: 25px;
   border-radius: 999px;
-  margin-left: 10px;
   border: none;
   align-self: center;
   cursor: pointer;
@@ -76,20 +75,27 @@ body {
 
 .todo-text{
   word-wrap: break-word;
-  width: fit-content;
-  max-width: 85%;
+  max-width: 90%;
+  min-width: 1%;
   height: auto;
   margin-left: 10px;
+  margin-right: 5px;
 }
 
 .todo-label{
-  width: 95%;
+  max-width: 95%;
+  min-width: 10%;
   display: flex;
 }
 
 .todo-delete{
-  color: black;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-btn{
+  color: black;
   cursor: pointer;
   border: none;
 }
@@ -103,7 +109,6 @@ body {
   position: fixed;
   display: flex;
   width: 100%;
-  max-width: 1000px;
   z-index: 10;
   bottom: 0%;
   width: 100%;

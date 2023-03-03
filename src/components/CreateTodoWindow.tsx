@@ -5,11 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 interface CreateTodoWindowProps {
   todoWindow: boolean;
   addTodoError: boolean;
-  setTodoWindow: Function;
-  setAddTodoError: Function;
+  setTodoWindow: (setState: boolean) => void;
+  setAddTodoError: (setState: boolean) => void;
   newTodo: string;
-  inputOnChange: Function;
-  addTodo: Function;
+  inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  addTodo: () => void;
 }
 export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
   addTodoError,

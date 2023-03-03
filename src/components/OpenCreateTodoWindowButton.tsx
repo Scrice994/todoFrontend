@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 
 interface OpenCreateTodoWindowButtonProps {
-  setTodoWindow: Function;
+  setTodoWindow: (setState: boolean) => void;
 }
 
 export const OpenCreateTodoWindowButton: React.FC<

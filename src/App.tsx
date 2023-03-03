@@ -16,7 +16,8 @@ export default function App() {
     checkTodo,
     addTodo,
     inputOnChange,
-    setAddTodoError
+    setAddTodoError,
+    lastTodoRef
   } = useTodo(
     new HttpClient(),
     "http://localhost:3005/todo"
@@ -30,6 +31,7 @@ export default function App() {
         deleteTodo={deleteTodo} 
         checkTodo={checkTodo}
         todoWindow={todoWindow}
+        lastTodoRef={lastTodoRef}
       />
       <CreateTodoWindow
         todoWindow={todoWindow}
