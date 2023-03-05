@@ -27,6 +27,6 @@ jobs:
         run: |
           curl -X POST https://api.github.com/repos/Scrice994/TodoE2E/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.REPO_ACCESS_TOKEN }} \
+          -u ${{ secrets.GITHUB_TOKEN }} \
           --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
       - uses: actions/checkout@v3
