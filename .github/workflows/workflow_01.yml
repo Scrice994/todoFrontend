@@ -27,7 +27,7 @@ jobs:
         run: echo "Peppino"
       - name: Test
         run: |
-          curl -X POST https://api.github.com/repos/Scrice994/todoFrontend/workflows/dispatches \
+          curl -X POST https://api.github.com/repos/Scrice994/todoFrontend/workflows/workflow_01.yml/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{ secrets.FRONTEND_ACCESS_TOKEN}} \
           --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
