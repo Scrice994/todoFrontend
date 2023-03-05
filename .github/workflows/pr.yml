@@ -21,7 +21,7 @@ jobs:
     permissions: {}
     steps:
       - name: call-e2e
-        - env:
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -L \
