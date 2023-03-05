@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: call-e2e
         env:
-          GH_TOKEN: ${{ secrets.FRONTEND_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         run: |
           curl -L \
           -X POST \
