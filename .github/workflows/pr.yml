@@ -32,7 +32,7 @@ jobs:
       - name: run app
         run: npm start
       
-      - uses: convictional/trigger-workflow-and-wait@1.6.5
+      - uses: convictional/trigger-workflow-and-wait@1.6.0
         with:
           owner: Scrice994
           repo: todoE2E
