@@ -16,9 +16,8 @@ jobs:
 
       - name: frontend-tests
         run: npm test
-      
-      - name: run e2e tests
-        uses: Scrice994/TodoE2E/.github/workflows/pr.yml@main
-
+  
+  e2e-test:
+    uses: Scrice994/TodoE2E/.github/workflows/pr.yml@main
 
     
