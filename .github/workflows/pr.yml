@@ -34,7 +34,6 @@ jobs:
   
   call-e2e:
     runs-on: ubuntu-latest
-    permissions: {}
     steps:
       - name: call-e2e
         env:
