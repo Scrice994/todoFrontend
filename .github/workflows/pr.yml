@@ -15,22 +15,4 @@ jobs:
 
       - name: frontend-tests
         run: npm test
-  
-  call-e2e:
-    runs-on: ubuntu-latest
-    permissions: {}
-    steps:
-      - name: call-e2e
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl -L \
-          -X POST \
-          -- verbos
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer $GH_TOKEN"\
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          "https://api.github.com/repos/Scrice994/TodoE2E/actions/workflows/pr.yml/dispatches" \
-          -d '{"ref":"main"}'
       
-    
