@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   commit:
@@ -21,20 +22,14 @@ jobs:
   
   e2e-test:
     runs-on: ubuntu-latest
+    
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Test
+        run: |
+          curl -X POST https://api.github.com/repos/Scrice994/TodoE2E/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.FRONTEND_ACCESS_TOKEN }} \
+          --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: npm-ci
-        run: npm ci
-      
-      - name: run app
-        run: npm start &
-      - uses: convictional/trigger-workflow-and-wait@v1.3.0
-        with:
-          owner: Scrice994
-          repo: todoE2E
-          github_token: ${{ secrets.FRONTEND_ACCESS_TOKEN }}
-          workflow_file_name: pr.yml
     
