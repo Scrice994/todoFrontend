@@ -30,8 +30,7 @@ jobs:
         run: npm ci
       
       - name: run app
-        run: npm start
-      
+        run: npm start &
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: Scrice994
