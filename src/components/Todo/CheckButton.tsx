@@ -1,4 +1,4 @@
-import { TodoEntity } from "../../../../backend/src/entities/TodoEntity";
+import { TodoEntity } from "../../common/interfaces/ITodoEntity"
 import { AnimatePresence, motion } from "framer-motion";
 
 interface CheckButtonProps {

@@ -1,5 +1,5 @@
 import { FaTrash } from "react-icons/fa";
-import { TodoEntity } from "../../../../backend/src/entities/TodoEntity";
+import { TodoEntity } from "../../common/interfaces/ITodoEntity"
 import { CheckButton } from "./CheckButton";
 import { motion } from "framer-motion";
 

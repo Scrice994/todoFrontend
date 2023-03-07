@@ -1,4 +1,4 @@
-import { TodoEntity } from "../../../backend/src/entities/TodoEntity";
+import { TodoEntity } from "../../src/common/interfaces/ITodoEntity";
 import { Todo } from "./Todo/Todo";
 import { AnimatePresence } from "framer-motion";
 

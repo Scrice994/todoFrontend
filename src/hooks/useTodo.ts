@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { TodoEntity } from "../../../backend/src/entities/TodoEntity";
+import { TodoEntity } from "../../src/common/interfaces/ITodoEntity";
 import { IHttpClient } from "../common/interfaces/IHttpClient";
 
 export default function useTodo(httpClient: IHttpClient, url: string) {
