@@ -35,14 +35,14 @@ export default function App() {
       />
       <CreateTodoWindow
         todoWindow={todoWindow}
-        setTodoWindow={setTodoWindow}
+        closeTodoWindow={() => setTodoWindow(false)}
         inputOnChange={inputOnChange}
         newTodo={newTodo}
         addTodo={addTodo}
         addTodoError={addTodoError}
-        setAddTodoError={setAddTodoError}
+        removeError={() => setAddTodoError(false)}
       />
-      <OpenCreateTodoWindowButton setTodoWindow={setTodoWindow} />
+      <OpenCreateTodoWindowButton openTodoWindow={() => setTodoWindow(true)} />
     </div>
   );
 }

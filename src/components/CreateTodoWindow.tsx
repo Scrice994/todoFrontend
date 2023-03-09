@@ -5,8 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 interface CreateTodoWindowProps {
   todoWindow: boolean;
   addTodoError: boolean;
-  setTodoWindow: (setState: boolean) => void;
-  setAddTodoError: (setState: boolean) => void;
+  closeTodoWindow: () => void;
+  removeError: () => void;
   newTodo: string;
   inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   addTodo: () => void;
@@ -14,8 +14,8 @@ interface CreateTodoWindowProps {
 export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
   addTodoError,
   todoWindow,
-  setTodoWindow,
-  setAddTodoError,
+  closeTodoWindow,
+  removeError,
   newTodo,
   inputOnChange,
   addTodo,
@@ -37,10 +37,7 @@ export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
         {todoWindow && (
           <motion.div className="add-todo-window" {...windowAnimation}>
             <div
-              onClick={() => {
-                setTodoWindow(false);
-                setAddTodoError(false);
-              }}
+              onClick={() => {closeTodoWindow(); removeError();}}
               className="close-window"
             >
               X
