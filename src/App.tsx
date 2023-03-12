@@ -36,6 +36,7 @@ export default function App() {
                 checkTodo={checkTodo}
                 todoWindow={todoWindow}
                 lastTodoRef={lastTodoRef}
+                deleteAllModal={deleteAllModal}
             />
             {deleteAllModal && 
                 <WarningDeleteAllModal

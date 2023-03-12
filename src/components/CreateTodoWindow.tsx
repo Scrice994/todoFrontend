@@ -45,7 +45,7 @@ export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
     <>
       <AnimatePresence>
         {todoWindow && (
-          <motion.div className="add-todo-window" {...windowAnimation}>
+          <motion.div className="add-todo-window" data-cy="add-modal" {...windowAnimation}>
             <div
               onClick={() => {closeTodoWindow()}}
               className="close-window"

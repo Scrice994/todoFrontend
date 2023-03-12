@@ -12,6 +12,7 @@ export const Header: React.FC<HeaderProps> = ({openModal}) => {
             <div>
                 <MdOutlinePlaylistRemove 
                     className="delete-list"
+                    data-cy="remove-list"
                     onClick={openModal}
                 />
             </div>

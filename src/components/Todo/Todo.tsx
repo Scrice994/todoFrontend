@@ -8,6 +8,7 @@ interface TodoProps {
   checkTodo: (id: string, completed: boolean) => void;
   deleteTodo: (id: string) => void;
   todoWindow: boolean;
+  deleteAllModal: boolean
 }
 
 export const Todo: React.FC<TodoProps> = ({
@@ -15,6 +16,7 @@ export const Todo: React.FC<TodoProps> = ({
   checkTodo,
   deleteTodo,
   todoWindow,
+  deleteAllModal
 
 }) => {
   const todoAnimation = {
@@ -38,6 +40,7 @@ export const Todo: React.FC<TodoProps> = ({
           todo={todo}
           checkTodo={checkTodo}
           todoWindow={todoWindow}
+          deleteAllModal={deleteAllModal}
         />
         <h3 className="todo-text">{todo.text}</h3>
       </div>
@@ -50,7 +53,7 @@ export const Todo: React.FC<TodoProps> = ({
             deleteTodo(todo.id);
             e.stopPropagation()
           }}
-          disabled={todoWindow === true}
+          disabled={todoWindow || deleteAllModal}
         >
           <FaTrash className="delete-icon" />
         </button>

@@ -5,12 +5,14 @@ interface CheckButtonProps {
   todo: TodoEntity;
   checkTodo: (id: string, completed: boolean) => void;
   todoWindow: boolean;
+  deleteAllModal: boolean
 }
 
 export const CheckButton: React.FC<CheckButtonProps> = ({
   todo,
   checkTodo,
   todoWindow,
+  deleteAllModal
 }) => {
   const animationCircle = {
     initial: { r: 0 },
@@ -32,7 +34,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
     <button
       data-cy="check-btn"
       className={"checkbox checked"}
-      disabled={todoWindow === true}
+      disabled={todoWindow || deleteAllModal}
       onClick={() => checkTodo(todo.id, todo.completed!)}
     >
       <svg viewBox="0 0 100 100" className="circle-animation">

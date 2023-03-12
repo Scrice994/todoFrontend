@@ -8,6 +8,7 @@ interface TodosProps {
   checkTodo: (id: string, completed: boolean) => void;
   todoWindow: boolean;
   lastTodoRef: any;
+  deleteAllModal: boolean
 }
 
 export const Todos: React.FC<TodosProps> = ({
@@ -15,7 +16,8 @@ export const Todos: React.FC<TodosProps> = ({
   deleteTodo,
   checkTodo,
   todoWindow,
-  lastTodoRef
+  lastTodoRef,
+  deleteAllModal
 }) => {
   return (
     <div className="todos">
@@ -26,6 +28,7 @@ export const Todos: React.FC<TodosProps> = ({
             deleteTodo={deleteTodo}
             checkTodo={checkTodo}
             todoWindow={todoWindow}
+            deleteAllModal={deleteAllModal}
             key={todo.id}
           />
         ))}
