@@ -1,94 +1,111 @@
-import { useState, useEffect, useRef } from "react";
-import { TodoEntity } from "../../src/common/interfaces/ITodoEntity";
-import { IHttpClient } from "../common/interfaces/IHttpClient";
+import { useState, useEffect, useRef } from 'react';
+import { TodoEntity } from '../../src/common/interfaces/ITodoEntity';
+import { IHttpClient } from '../common/interfaces/IHttpClient';
 
 export default function useTodo(httpClient: IHttpClient, url: string) {
-  const [todos, setTodos] = useState<TodoEntity[]>([]);
-  const [todoWindow, setTodoWindow] = useState<boolean>(false);
-  const [newTodo, setNewTodo] = useState<string>("");
-  const [addTodoError, setAddTodoError] = useState<boolean>(false);
+    const [todos, setTodos] = useState<TodoEntity[]>([]);
+    const [todoWindow, setTodoWindow] = useState<boolean>(false);
+    const [newTodo, setNewTodo] = useState<string>('');
+    const [addTodoError, setAddTodoError] = useState<boolean>(false);
+    const [deleteAllModal, setDeleteAllModal] = useState<boolean>(false)
 
-  useEffect(() => {
-    const getAllTodos = async () => {
-      const data = await httpClient.sendRequest(url, { method: "GET" });
-      if (data?.response !== undefined) {
-        setTodos(data.response);
-      }
+    useEffect(() => {
+        const getAllTodos = async () => {
+            const data = await httpClient.sendRequest(url, { method: 'GET' });
+            if (data.response) {
+                setTodos(data.response);
+            }
+        };
+
+        getAllTodos();
+    }, []);
+
+    useEffect(() => {
+        const OnEnter = (event: KeyboardEvent) => {
+            if (event.key === 'Enter' && todoWindow === false && !deleteAllModal) {
+              setNewTodo('')
+              setTodoWindow(true);
+            }
+        };
+
+        document.addEventListener('keydown', OnEnter);
+
+        return () => document.removeEventListener('keydown', OnEnter);
+    }, [todoWindow, deleteAllModal]);
+
+    const lastTodoRef = useRef<null | HTMLDivElement>(null);
+
+    const deleteTodo = async (id: string) => {
+        const data = await httpClient.sendRequest(`${url}/${id}`, {
+            method: 'DELETE',
+        });
+        if (data.response) {
+            setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+        }
     };
 
-    getAllTodos();
-
-    document.addEventListener("keydown", OnEnter);
-  }, []);
-
-  const lastTodoRef = useRef<null | HTMLDivElement>(null);
-
-  const OnEnter = (event: KeyboardEvent) => {
-    if (event.key === "Enter" && todoWindow === false) {
-      setTodoWindow(true);
-    }
-  };
-
-  const deleteTodo = async (id: string) => {
-    const data = await httpClient.sendRequest(`${url}/${id}`, {
-      method: "DELETE",
-    });
-    if (data?.response !== undefined) {
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-    }
-  };
-
-  const checkTodo = async (id: string, completed: boolean) => {
-    const data = await httpClient.sendRequest(`${url}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ completed: !completed }),
-    });
-    if (data?.response !== undefined) {
-      setTodos((prevTodos) =>
-        prevTodos.map((todo) =>
-          todo.id === id ? { ...todo, completed: !completed } : todo
-        )
-      );
-    }
-  };
-
-  const addTodo = async () => {
-    const data = await httpClient.sendRequest(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: newTodo }),
-    });
-
-    if (newTodo === "") {
-      setAddTodoError(true);
+    const deleteAllTodos = async () => {
+        const data = await httpClient.sendRequest(`${url}/deleteAll`, { method: "DELETE"} )
+        
+        if(data.response){
+            setTodos([])
+        }
+        setDeleteAllModal(false)
     }
 
-    if (data?.response !== undefined) {
-      setTodos((prevTodos) => [...prevTodos, data.response]);
-      setNewTodo("");
-      setTodoWindow(false);
-      setAddTodoError(false);
-      lastTodoRef.current?.scrollIntoView(true);
-    }
-  };
+    const checkTodo = async (id: string, completed: boolean) => {
+        const data = await httpClient.sendRequest(`${url}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ completed: !completed }),
+        });
+        if (data.response) {
+            setTodos((prevTodos) =>
+                prevTodos.map((todo) =>
+                    todo.id === id ? { ...todo, completed: !completed } : todo
+                )
+            );
+        }
+    };
 
-  const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTodo(event.target.value);
-    setAddTodoError(false);
-  };
+    const addTodo = async (todo: string) => {
+        if (todo === '') {
+            return setAddTodoError(true);
+        }
 
-  return {
-    todos,
-    todoWindow,
-    newTodo,
-    addTodoError,
-    deleteTodo,
-    setTodoWindow,
-    checkTodo,
-    addTodo,
-    inputOnChange,
-    setAddTodoError,
-    lastTodoRef,
-  };
+        const data = await httpClient.sendRequest(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: todo }),
+        });
+
+        setNewTodo('');
+        setTodoWindow(false);
+        setAddTodoError(false);
+        setTodos((prevTodos) => [...prevTodos, data.response]);
+        lastTodoRef.current?.scrollIntoView(true);
+    };
+
+    const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewTodo(event.target.value);
+        setAddTodoError(false);
+    };
+
+    return {
+        todos,
+        todoWindow,
+        newTodo,
+        setNewTodo,
+        addTodoError,
+        deleteTodo,
+        setTodoWindow,
+        checkTodo,
+        addTodo,
+        inputOnChange,
+        setAddTodoError,
+        lastTodoRef,
+        deleteAllModal,
+        setDeleteAllModal,
+        deleteAllTodos
+    };
 }

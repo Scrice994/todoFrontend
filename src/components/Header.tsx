@@ -1,7 +1,20 @@
 import React from "react"
+import { MdOutlinePlaylistRemove } from "react-icons/md";
 
-export const Header: React.FC = () => {
+interface HeaderProps{
+    openModal: () => void
+}
+
+export const Header: React.FC<HeaderProps> = ({openModal}) => {
     return(
-        <h2 className="header">Welcome User, Your tasks are:</h2>
+        <div className="header">  
+            <h2>Welcome User, Your tasks are:</h2>
+            <div>
+                <MdOutlinePlaylistRemove 
+                    className="delete-list"
+                    onClick={openModal}
+                />
+            </div>
+        </div>
     )
 }

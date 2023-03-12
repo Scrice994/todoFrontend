@@ -6,24 +6,34 @@ interface CreateTodoWindowProps {
   todoWindow: boolean;
   addTodoError: boolean;
   closeTodoWindow: () => void;
-  removeError: () => void;
   newTodo: string;
   inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  addTodo: () => void;
+  addTodo: (todo: string) => void;
 }
+
 export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
   addTodoError,
   todoWindow,
   closeTodoWindow,
-  removeError,
   newTodo,
   inputOnChange,
   addTodo,
 }) => {
+
   const setFocus = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setFocus.current?.focus();
-  }, [todoWindow]);
+
+    function onEnterPress(e: KeyboardEvent){
+        if (e.key === "Enter" && todoWindow) {addTodo(newTodo)}
+    }
+
+    document.addEventListener("keydown", onEnterPress)
+
+    return () => document.removeEventListener("keydown", onEnterPress)
+    
+  }, [todoWindow, addTodo, newTodo]);
 
   const windowAnimation = {
     initial: { top: 600, opacity: 0 },
@@ -37,7 +47,7 @@ export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
         {todoWindow && (
           <motion.div className="add-todo-window" {...windowAnimation}>
             <div
-              onClick={() => {closeTodoWindow(); removeError();}}
+              onClick={() => {closeTodoWindow()}}
               className="close-window"
             >
               X
@@ -52,18 +62,15 @@ export const CreateTodoWindow: React.FC<CreateTodoWindowProps> = ({
               type="text"
               value={newTodo}
               onChange={(e) => inputOnChange(e)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") addTodo();
-              }}
               ref={setFocus}
             />
             {addTodoError && newTodo.length <= 0 && (
               <label className="error" data-cy="empty-input-msg">The task can't be empty!</label>
             )}
             <button
-              onClick={() => addTodo()}
-              className="create-task-button"
+              onClick={() => addTodo(newTodo)}
               data-cy="create-task"
+              className="create-task-button"
             >
               Create task!
             </button>
