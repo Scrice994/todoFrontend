@@ -24,6 +24,54 @@ body {
   overflow-x: hidden;
 }
 
+.title{
+  margin: 0.5em auto 0.5em;
+  text-align: center;
+  letter-spacing: 1rem;
+  font-weight: bolder;
+  font-size: clamp(20px, 8vw, 70px); 
+}
+
+.subtitle{
+  margin: 0.5em auto 0.5em;
+  font-size: clamp(10px, 8vw, 20px); 
+  text-align: center;
+}
+
+.user-form{
+  width: clamp(100px, 60vw, 700px);
+  margin: 0 auto;
+}
+
+.user-input{
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  padding: 16px;
+  box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  width: 100%;
+  margin: 10px auto;
+}
+
+.user-btn{
+  width: 100%;
+  border-radius: 10px;
+  background-color: #1f44b3;
+  padding: 0.5em 1em;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 1);
+  margin: 10px auto;
+}
+
+.user-btn:hover{
+  background-color: #4461b6;
+}
+
 .header{
   font-size: 1em;
   background-color: rgb(0, 0, 0);
@@ -35,6 +83,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.user-menu{
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout{
+  cursor: pointer;
 }
 
 .delete-list{
@@ -75,6 +134,13 @@ body {
 .warning-modal-btn{
   padding: 0.5em 2em;
   cursor: pointer;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.warning-modal-btn:hover{
+  background-color: #8997c0;
 }
 
 .todos{
@@ -107,10 +173,6 @@ body {
   cursor: pointer;
 }
 
-/* .checked{
-  border: 1.4px solid black;
-} */
-
 .check-icon{
   width: 20px;
   height: 20px; 
@@ -118,7 +180,7 @@ body {
 
 .todo-text{
   word-wrap: break-word;
-  max-width: 90%;
+  max-width: 100%;
   min-width: 1%;
   height: auto;
   margin-left: 10px;

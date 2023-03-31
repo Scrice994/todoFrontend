@@ -1,5 +1,5 @@
-import { IHttpClient } from "./interfaces/IHttpClient";
-import { Request } from "./interfaces/IHttpClient";
+import { IHttpClient } from "../interfaces/IHttpClient";
+import { Request } from "../interfaces/IHttpClient";
 
 export class HttpClient implements IHttpClient {
   async sendRequest(url: string, request: Request): Promise<any> {
