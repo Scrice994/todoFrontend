@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({openModal, user}) => {
 
     return(
         <div className="header">  
-            <h2>Welcome {user}, Your tasks are:</h2>
+            <h2 data-cy="header">Welcome {user}, Your tasks are:</h2>
             <div className="user-menu">
                 <MdOutlinePlaylistRemove 
                     className="delete-list"

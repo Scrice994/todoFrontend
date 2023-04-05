@@ -31,7 +31,7 @@ const Root = () => {
     return (
         <>
             <div>
-                <h1 className='title'>My to do list</h1>
+                <h1 className='title' data-cy='title'>My to do list</h1>
             </div>
             <div>
                 <Outlet />

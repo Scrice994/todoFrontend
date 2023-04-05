@@ -44,28 +44,31 @@ export const Login: React.FC = () => {
 
   return (
     <>
-      <h3 className='subtitle'>if you don't have an account <Link to='Signup'>Signup</Link></h3>
+      <h3 className='subtitle' data-cy="login-subtitle">if you don't have an account <Link to='Signup' data-cy='signup-link'>Signup</Link></h3>
       <form className="user-form" onSubmit={handleSubmit(handleLogin)}>
-        <p style={{ color: 'red', textAlign: 'center'}}>{errors.customError?.message}</p>
+        <p style={{ color: 'red', textAlign: 'center'}} data-cy="credential-error">{errors.customError?.message}</p>
         <input 
           {...register('username', {required: 'Username is required'})}
           type='text'
           className="task-text"
           placeholder="Username..."
+          data-cy="login-username"
         />
-        <p style={{ color: 'red' }}>{errors.username?.message}</p>
+        <p style={{ color: 'red' }} data-cy="login-username-error">{errors.username?.message}</p>
         <input 
           {...register('password', {required: 'Password is required'})}
           type="password"
           className="task-text"
           placeholder="Password..."
+          data-cy="login-password"
         />
-        <p style={{ color: 'red' }}>{errors.password?.message}</p>
+        <p style={{ color: 'red' }} data-cy="login-password-error">{errors.password?.message}</p>
         <button 
           type="submit"
           onClick={() => clearErrors()}
           disabled={isSubmitting}
           className='user-btn'
+          data-cy="login-btn"
           >Login</button>
       </form>
     </>

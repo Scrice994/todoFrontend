@@ -45,7 +45,7 @@ export const Signup: React.FC = () =>  {
     <div>
       <h3 className='subtitle'>Create new account:</h3>
       <form className="user-form" onSubmit={handleSubmit(handleSignup)}>
-        <p style={{ color: 'red', textAlign: 'center'}}>{errors.customError?.message}</p>
+        <p style={{ color: 'red', textAlign: 'center'}} data-cy="signup-credentials-error">{errors.customError?.message}</p>
         <input 
           type="text"
           {...register('username', { 
@@ -59,8 +59,9 @@ export const Signup: React.FC = () =>  {
           }
           className="task-text"
           placeholder="Username..."
+          data-cy="signup-username"
         />
-        <p style={{ color: 'red' }}>{errors.username?.message}</p>
+        <p style={{ color: 'red' }} data-cy="signup-username-error">{errors.username?.message}</p>
         <input 
           type="password"
           {...register('password', { 
@@ -74,13 +75,15 @@ export const Signup: React.FC = () =>  {
           }
           className="task-text"
           placeholder="Password..."
+          data-cy="signup-password"
         />
-        <p style={{ color: 'red' }}>{errors.password?.message}</p>
+        <p style={{ color: 'red' }} data-cy="signup-password-error">{errors.password?.message}</p>
         <button 
           type="submit"
           onClick={() => clearErrors()}
           disabled={isSubmitting}
           className='user-btn'
+          data-cy="form-submit-btn"
           >Signup</button>
       </form>
       <h3 className='subtitle'>If u already have an account <Link to='/login'>Login</Link></h3>
