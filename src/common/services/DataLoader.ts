@@ -1,10 +1,10 @@
-import { IAuthToken } from '../interfaces/IAuthToken';
-import { IDataLoader } from '../interfaces/IDataLoader';
+import { ILocalStorageHandler } from '../interfaces/ILocalStorageHandler';
 import { IHttpClient } from '../interfaces/IHttpClient';
-import { TodoEntity } from '../interfaces/ITodoEntity';
+import { TodoService } from './TodoService';
+import { UserService } from './UserService';
 
-export class DataLoader implements IDataLoader{
-    constructor(private _token: IAuthToken, private httpClient: IHttpClient, private url: string){}
+export class DataLoader {
+    constructor(private _token: ILocalStorageHandler, private httpClient: IHttpClient, private url: string){}
 
     async loadData(){
         const findToken = this._token.getToken()
@@ -13,26 +13,13 @@ export class DataLoader implements IDataLoader{
             return null
         }
 
-        const todos = await this.loadTodos(findToken)
-        const username = await this.loadUser(findToken)
+        const todos = await new TodoService(this.httpClient, this.url, findToken).getTodosAPI()
+        const username = await new UserService(this.httpClient, this.url, this._token).getUser('/user/findUser')
 
         return {
-            todos: todos || [],
-            user: username || 'User'
+            todos: todos,
+            user: username.username
         }
-    };
-
-    async loadTodos(token: string): Promise<TodoEntity[]> {
-        const todoData = await this.httpClient.sendRequest(this.url + '/todo', { method: 'GET', headers: {'Authorization': token}})
-        .catch(err => console.log(err))
-
-        return todoData.response
-    };
-
-    async loadUser(token: string){
-        const userData = await this.httpClient.sendRequest(this.url + '/user/findUser', { method: 'GET', headers: {'Authorization': token}})
-
-        return userData.response?.username
     };
 
 }

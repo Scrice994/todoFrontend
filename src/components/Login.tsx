@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { HttpClient } from '../common/services/HttpClient'
 import { useForm } from 'react-hook-form'
-import { AuthToken } from '../common/services/AuthToken'
+import { LocalStorageHandler } from '../common/services/LocalStorageHandler'
+import { UserService } from '../common/services/UserService'
 
 interface FormValues{
   username: string
@@ -19,26 +20,15 @@ export const Login: React.FC = () => {
   })
 
   const navigate = useNavigate()
-  const url = 'http://localhost:3005/user/login'
-  const _token = new AuthToken('user')
     
   async function handleLogin(values: FormValues){
+    const url = 'http://localhost:3005/user'
     
-    await new HttpClient().sendRequest(url,{
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(values)
-    })
-    .then(response => {
-      if(response.token){
-        _token.saveToken(response.token)
-        console.log('login successfully')
-        navigate("/")
-      } else {
-        setError('customError', { type: 'server', message: response.message})
-      }
-    })
-    .catch( error => console.log(error))
+    const saveUser = await new UserService(new HttpClient(), url, new LocalStorageHandler('user')).postValues(values, '/login')
+
+    if(!saveUser.status) return setError('customError', { type: 'server', message: saveUser.message})
+
+    if(saveUser.status) navigate("/")
  
   }
 

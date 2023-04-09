@@ -1,4 +1,4 @@
-import { TodoEntity } from "../../common/interfaces/ITodoEntity"
+import { TodoEntity } from "../../common/interfaces/TodoEntity"
 import { AnimatePresence, motion } from "framer-motion";
 
 interface CheckButtonProps {
@@ -8,28 +8,23 @@ interface CheckButtonProps {
   deleteAllModal: boolean
 }
 
-export const CheckButton: React.FC<CheckButtonProps> = ({
-  todo,
-  checkTodo,
-  todoWindow,
-  deleteAllModal
-}) => {
-  const animationCircle = {
-    initial: { r: 0 },
-    mid: { r: 47, transition: { duration: 0.15 } },
-    exit: { r: 0, transition: { duration: 0.25, delay: 0.1 } },
-  };
+const animationCircle = {
+  initial: { r: 0 },
+  mid: { r: 47, transition: { duration: 0.15 } },
+  exit: { r: 0, transition: { duration: 0.25, delay: 0.1 } },
+};
 
-  const animationCheck = {
-    initial: { pathLength: 0, opacity: 0 },
-    mid: {
-      pathLength: 1,
-      opacity: 1,
-      transition: { duration: 0.15, delay: 0.16 },
-    },
-    exit: { pathLength: 0, opacity: 0, transition: { duration: 0.15 } },
-  };
+const animationCheck = {
+  initial: { pathLength: 0, opacity: 0 },
+  mid: {
+    pathLength: 1,
+    opacity: 1,
+    transition: { duration: 0.15, delay: 0.16 },
+  },
+  exit: { pathLength: 0, opacity: 0, transition: { duration: 0.15 } },
+};
 
+export const CheckButton: React.FC<CheckButtonProps> = ({ todo, checkTodo, todoWindow, deleteAllModal }) => {
   return (
     <button
       data-cy="check-btn"

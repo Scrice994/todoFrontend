@@ -1,97 +1,55 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { TodoEntity } from '../../src/common/interfaces/ITodoEntity';
-import { IHttpClient } from '../common/interfaces/IHttpClient';
-import { AuthToken } from '../common/services/AuthToken'
 import { useNavigate } from 'react-router-dom'
+import { TodoService } from '../common/services/TodoService';
+import { TodoEntity } from '../common/interfaces/TodoEntity';
+import { IHttpClient } from '../common/interfaces/IHttpClient';
+import { LocalStorageHandler } from '../common/services/LocalStorageHandler'
+
+
 
 export default function useTodo(httpClient: IHttpClient, url: string) {
     const [todos, setTodos] = useState<TodoEntity[]>([]);
-    const [todoWindow, setTodoWindow] = useState<boolean>(false);
-    const [newTodo, setNewTodo] = useState<string>('');
-    const [addTodoError, setAddTodoError] = useState<boolean>(false);
-    const [deleteAllModal, setDeleteAllModal] = useState<boolean>(false)
-    const [user, setUser] = useState<String>('')
 
     const navigate = useNavigate()
     const initialData: any = useLoaderData()
+    const lastTodoRef = useRef<null | HTMLDivElement>(null);
 
     useEffect(() => {
 
         if(initialData){
             setTodos(initialData.todos)
-            setUser(initialData.user)
         } else {
             navigate("/login")
         }
 
     }, []);
 
-    useEffect(() => {
-        const OnEnter = (event: KeyboardEvent) => {
-            if (event.key === 'Enter' && todoWindow === false && !deleteAllModal) {
-              setNewTodo('')
-              setTodoWindow(true);
-            }
-        };
-
-        document.addEventListener('keydown', OnEnter);
-
-        return () => document.removeEventListener('keydown', OnEnter);
-    }, [todoWindow, deleteAllModal]);
-
-    const lastTodoRef = useRef<null | HTMLDivElement>(null);
-
-    const deleteTodo = async (id: string) => {
-        const token = new AuthToken('user').getToken()
+    const addTodo = async (todo: any) => {
+        const token = new LocalStorageHandler('user').getToken()
 
         if(!token){
             navigate('/login')
         }
 
-        const data = await httpClient.sendRequest(`${url}/${id}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': token }
-        })
-       
-        if (data.response) {
-            setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-        }
+        const data = await new TodoService(httpClient, url, token).addTodoAPI(todo)
+ 
+        if(data) setTodos((prevTodos) => [...prevTodos, data]);
+
+        lastTodoRef.current?.scrollIntoView(true);
     };
 
-    const deleteAllTodos = async () => {
-        const token = new AuthToken('user').getToken()
-        
-        
-        if(!token){
-            navigate('/login')
-        }
-
-        const data = await httpClient.sendRequest(`${url}/deleteAll`, { method: "DELETE", headers: { 'Authorization': token }})
-        .catch(err => console.log(err))
-        
-        if(data.response){
-            setTodos([])
-        }
-
-        setDeleteAllModal(false)
-    }
-
     const checkTodo = async (id: string, completed: boolean) => {
-        const token = new AuthToken('user').getToken()
+        const token = new LocalStorageHandler('user').getToken()
         
         
         if(!token){
             navigate('/login')
         }
 
-        const data = await httpClient.sendRequest(`${url}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Authorization': token },
-            body: JSON.stringify({ completed: !completed }),
-        }).catch(err => console.log(err))
+        const data = await new TodoService(httpClient, url, token).checkTodoAPI(id, completed)
 
-        if (data.response) {
+        if (data) {
             setTodos((prevTodos) =>
                 prevTodos.map((todo) =>
                     todo.id === id ? { ...todo, completed: !completed } : todo
@@ -100,52 +58,39 @@ export default function useTodo(httpClient: IHttpClient, url: string) {
         }
     };
 
-    const addTodo = async (todo: string) => {
-        if (todo === '') {
-            return setAddTodoError(true);
-        }
-
-        const token = new AuthToken('user').getToken()
+    const deleteTodo = async (id: string) => {
+        const token = new LocalStorageHandler('user').getToken()
 
         if(!token){
             navigate('/login')
         }
 
-        const data = await httpClient.sendRequest(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': token },
-            body: JSON.stringify({ text: todo }),
-        })
-        .catch(err => console.log(err))
+        const data = await new TodoService(httpClient, url, token).deleteTodoAPI(id)
 
-        setNewTodo('');
-        setTodoWindow(false);
-        setAddTodoError(false);
-        setTodos((prevTodos) => [...prevTodos, data.response]);
-        lastTodoRef.current?.scrollIntoView(true);
+        if (data) setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     };
 
-    const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNewTodo(event.target.value);
-        setAddTodoError(false);
-    };
+    const deleteAllTodos = async () => {
+        const token = new LocalStorageHandler('user').getToken()
+        
+        
+        if(!token){
+            navigate('/login')
+        }
+
+        const data = await new TodoService(httpClient, url, token).deleteAllTodosAPI()
+        
+        if(data){
+            setTodos([])
+        }
+    }
 
     return {
         todos,
-        user,
-        todoWindow,
-        newTodo,
-        setNewTodo,
-        addTodoError,
+        lastTodoRef,
         deleteTodo,
-        setTodoWindow,
         checkTodo,
         addTodo,
-        inputOnChange,
-        setAddTodoError,
-        lastTodoRef,
-        deleteAllModal,
-        setDeleteAllModal,
         deleteAllTodos
     };
 }

@@ -1,6 +1,6 @@
-import { IAuthToken } from "../interfaces/IAuthToken"
+import { ILocalStorageHandler } from "../interfaces/ILocalStorageHandler"
 
-export class AuthToken implements IAuthToken{
+export class LocalStorageHandler implements ILocalStorageHandler{
     constructor(private tokenName: string){}
 
     saveToken(token: string){

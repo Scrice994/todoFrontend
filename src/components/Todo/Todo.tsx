@@ -1,5 +1,5 @@
 import { FaTrash } from "react-icons/fa";
-import { TodoEntity } from "../../common/interfaces/ITodoEntity"
+import { TodoEntity } from "../../common/interfaces/TodoEntity"
 import { CheckButton } from "./CheckButton";
 import { motion } from "framer-motion";
 
@@ -7,23 +7,17 @@ interface TodoProps {
   todo: TodoEntity;
   checkTodo: (id: string, completed: boolean) => void;
   deleteTodo: (id: string) => void;
-  todoWindow: boolean;
+  todoModal: boolean;
   deleteAllModal: boolean
 }
 
-export const Todo: React.FC<TodoProps> = ({
-  todo,
-  checkTodo,
-  deleteTodo,
-  todoWindow,
-  deleteAllModal
+const todoAnimation = {
+  initial: { opacity: 0, y: -20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, x: 15, transition: { duration: 0.1 } },
+};
 
-}) => {
-  const todoAnimation = {
-    initial: { opacity: 0, y: -20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, x: 15, transition: { duration: 0.1 } },
-  };
+export const Todo: React.FC<TodoProps> = ({ todo, checkTodo, deleteTodo, todoModal, deleteAllModal }) => {
 
   return (
     <motion.div
@@ -39,7 +33,7 @@ export const Todo: React.FC<TodoProps> = ({
         <CheckButton
           todo={todo}
           checkTodo={checkTodo}
-          todoWindow={todoWindow}
+          todoWindow={todoModal}
           deleteAllModal={deleteAllModal}
         />
         <h3 className="todo-text">{todo.text}</h3>
@@ -53,7 +47,7 @@ export const Todo: React.FC<TodoProps> = ({
             deleteTodo(todo.id);
             e.stopPropagation()
           }}
-          disabled={todoWindow || deleteAllModal}
+          disabled={todoModal || deleteAllModal}
         >
           <FaTrash className="delete-icon" />
         </button>

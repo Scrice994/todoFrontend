@@ -1,6 +1,6 @@
 import React from "react"
 import { MdOutlinePlaylistRemove } from "react-icons/md";
-import { AuthToken } from "../common/services/AuthToken";
+import { LocalStorageHandler } from "../common/services/LocalStorageHandler";
 import { useNavigate } from "react-router-dom";
 
 interface HeaderProps{
@@ -11,7 +11,7 @@ interface HeaderProps{
 export const Header: React.FC<HeaderProps> = ({openModal, user}) => {
 
     const navigate = useNavigate()
-    const token = new AuthToken('user')
+    const token = new LocalStorageHandler('user')
 
     const logoutHandler = () => {
         token.removeToken()
