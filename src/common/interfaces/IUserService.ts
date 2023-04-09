@@ -4,6 +4,6 @@ export interface ResponseStatus{
 }
 
 export interface IUserService{
-    getUser: (url: string) => Promise<string>
+    getUser: (url: any) => Promise<any>
     postValues: (values: any, url: string) => Promise<ResponseStatus>
 }
