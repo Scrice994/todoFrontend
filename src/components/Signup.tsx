@@ -8,6 +8,7 @@ import { LocalStorageHandler } from '../common/services/LocalStorageHandler'
 interface FormValues{
   username: string
   password: string
+  confirmPassword: string
   customError?: string
 }
 
@@ -15,7 +16,8 @@ export const Signup: React.FC = () =>  {
 
   const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<FormValues>({ defaultValues: {
     username: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   }})
   const navigate = useNavigate()
 
@@ -66,6 +68,14 @@ export const Signup: React.FC = () =>  {
           data-cy="signup-password"
         />
         <p style={{ color: 'red' }} data-cy="signup-password-error">{errors.password?.message}</p>
+        <input 
+          type="password"
+          {...register('confirmPassword', { required: 'Confirm password is required' })}
+          className="task-text"
+          placeholder="Confirm password..."
+          data-cy="signup-confirmPassword"
+        />
+        <p style={{ color: 'red' }} data-cy="signup-confirmPassword-error">{errors.confirmPassword?.message}</p>
         <button 
           type="submit"
           onClick={() => clearErrors()}

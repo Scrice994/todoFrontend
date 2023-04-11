@@ -1,6 +1,6 @@
 import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
 import { HttpClient } from './common/services/HttpClient';
-import Home from './components/Home';
+import { Home } from './components/Home';
 import { Login } from './components/Login';
 import { Signup } from './components/Signup';
 import { DataLoader } from './common/services/DataLoader';
@@ -10,13 +10,15 @@ import { UserService } from './common/services/UserService';
 
 export default function App() {
 
+    const url = 'http://localhost:3005'
+
     const router = createBrowserRouter(
         createRoutesFromElements(
                 <>
-                    <Route path='/' element={<Home />} loader={() => 
+                    <Route path='/' element={<Home url={url}/>} loader={() => 
                         new DataLoader(new LocalStorageHandler('user'), 
-                        new TodoService(new HttpClient(), 'http://localhost:3005', new LocalStorageHandler('user').getToken()),
-                        new UserService(new HttpClient(), 'http://localhost:3005', new LocalStorageHandler('user')) 
+                        new TodoService(new HttpClient(), url, new LocalStorageHandler('user').getToken()),
+                        new UserService(new HttpClient(), url, new LocalStorageHandler('user')) 
                         ).loadData()} 
                     />
                     <Route path='/login' element={<Root />}>

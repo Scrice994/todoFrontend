@@ -8,13 +8,16 @@ import { Header } from './Header';
 import { Todos } from './Todos';
 import { DeleteAllModal } from './DeleteAllModal';
 
+interface HomeProps{
+    url: string
+}
 
-export default function Home() {
+export const Home: React.FC<HomeProps> = ({ url }) => {
     const [deleteAllModal, setDeleteAllModal] = useState<boolean>(false)
     const [todoModal, setTodoModal] = useState<boolean>(false);
 
     const { user } = useUser()
-    const { todos, deleteTodo, checkTodo, addTodo, deleteAllTodos, lastTodoRef } = useTodo(new HttpClient(), 'http://localhost:3005');
+    const { todos, deleteTodo, checkTodo, addTodo, deleteAllTodos, lastTodoRef } = useTodo(new HttpClient(), url);
 
     useEffect(() => {
         const OnEnter = (event: KeyboardEvent) => {
