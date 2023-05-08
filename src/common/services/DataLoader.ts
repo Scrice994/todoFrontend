@@ -1,8 +1,7 @@
 import { ILocalStorageHandler } from '../interfaces/ILocalStorageHandler';
-import { TodoService } from './TodoService';
-import { UserService } from './UserService';
 import { ITodoService } from '../interfaces/ITodoService';
 import { IUserService } from '../interfaces/IUserService';
+import { ILoadedData } from '../interfaces/ILoadedData';
 
 export class DataLoader {
     constructor(
@@ -11,7 +10,7 @@ export class DataLoader {
         private userService: IUserService,
     ){}
 
-    async loadData(){
+    async loadData(): Promise<ILoadedData | null> {
         const findToken = this._token.getToken()
 
         if(!findToken){
@@ -24,7 +23,7 @@ export class DataLoader {
 
         return {
             todos: todos,
-            user: user.username
+            user: user
         }
     };
 

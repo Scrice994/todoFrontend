@@ -75,4 +75,22 @@ describe('UserService', () => {
             expect(result.message).toBe('mockError')
         })
     })
+
+    describe("createNewMember()", () => {
+        it("Should return true if createNewMemberAPI return a valid result", async () => {
+            httpClient.sendRequest.mockImplementationOnce(() => Promise.resolve({success: 'Test'}))
+
+            const result = await service.createNewMember('Test')
+
+            expect(result).toEqual({ status: true })
+        })
+
+        it("Should return false and errorMessage if createNewMemberAPI return an invalid result", async () => {
+            httpClient.sendRequest.mockImplementationOnce(() => Promise.resolve({message: 'TestError'}))
+
+            const result = await service.createNewMember('Test')
+
+            expect(result).toEqual({ status: false, message: 'TestError' })
+        })
+    })
 });

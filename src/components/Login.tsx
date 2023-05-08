@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { LocalStorageHandler } from '../common/services/LocalStorageHandler'
 import { UserService } from '../common/services/UserService'
 
-interface FormValues{
+interface LoginFormValues{
   username: string
   password: string
   customError?: string
@@ -12,7 +12,7 @@ interface FormValues{
 
 export const Login: React.FC = () => {
 
-  const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<LoginFormValues>({
     defaultValues: {
       username: '',
       password: ''
@@ -21,7 +21,7 @@ export const Login: React.FC = () => {
 
   const navigate = useNavigate()
     
-  async function handleLogin(values: FormValues){
+  async function handleLogin(values: LoginFormValues){
     const url = 'http://localhost:3005/user'
     
     const saveUser = await new UserService(new HttpClient(), url, new LocalStorageHandler('user')).postValues(values, '/login')

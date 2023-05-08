@@ -7,6 +7,7 @@ import { DataLoader } from './common/services/DataLoader';
 import { LocalStorageHandler } from './common/services/LocalStorageHandler';
 import { TodoService } from './common/services/TodoService';
 import { UserService } from './common/services/UserService';
+import CreateUser from './components/Admin/CreateUser';
 
 export default function App() {
 
@@ -19,8 +20,11 @@ export default function App() {
                         new DataLoader(new LocalStorageHandler('user'), 
                         new TodoService(new HttpClient(), url, new LocalStorageHandler('user').getToken()),
                         new UserService(new HttpClient(), url, new LocalStorageHandler('user')) 
-                        ).loadData()} 
-                    />
+                        ).loadData()}>
+                    </Route>
+                    <Route path='/admin'>
+                        <Route path='create-new-user' element={<CreateUser />} />
+                    </Route> 
                     <Route path='/login' element={<Root />}>
                         <Route index element={<Login />} />
                         <Route path='signup' element={<Signup />} />

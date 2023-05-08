@@ -5,23 +5,25 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { LocalStorageHandler } from '../common/services/LocalStorageHandler'
 
-interface FormValues{
+interface SignupFormValues{
   username: string
   password: string
   confirmPassword: string
+  groupName: string
   customError?: string
 }
 
 export const Signup: React.FC = () =>  {
 
-  const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<FormValues>({ defaultValues: {
+  const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<SignupFormValues>({ defaultValues: {
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    groupName: ''
   }})
   const navigate = useNavigate()
 
-  async function handleSignup(values: FormValues){
+  async function handleSignup(values: SignupFormValues){
     const url = 'http://localhost:3005/user'
 
     const saveUser = await new UserService(new HttpClient(), url, new LocalStorageHandler('user')).postValues(values, '/signup')
@@ -48,7 +50,7 @@ export const Signup: React.FC = () =>  {
             }})
           }
           className="task-text"
-          placeholder="Username..."
+          placeholder="Username...*"
           data-cy="signup-username"
         />
         <p style={{ color: 'red' }} data-cy="signup-username-error">{errors.username?.message}</p>
@@ -64,7 +66,7 @@ export const Signup: React.FC = () =>  {
             }})
           }
           className="task-text"
-          placeholder="Password..."
+          placeholder="Password...*"
           data-cy="signup-password"
         />
         <p style={{ color: 'red' }} data-cy="signup-password-error">{errors.password?.message}</p>
@@ -72,10 +74,17 @@ export const Signup: React.FC = () =>  {
           type="password"
           {...register('confirmPassword', { required: 'Confirm password is required' })}
           className="task-text"
-          placeholder="Confirm password..."
+          placeholder="Confirm password...*"
           data-cy="signup-confirmPassword"
         />
         <p style={{ color: 'red' }} data-cy="signup-confirmPassword-error">{errors.confirmPassword?.message}</p>
+        <input 
+          type="text"
+          {...register('groupName')}
+          className="task-text"
+          placeholder="Group or Company name..."
+          data-cy="signup-groupName"
+        />
         <button 
           type="submit"
           onClick={() => clearErrors()}
